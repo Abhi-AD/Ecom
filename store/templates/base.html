@@ -21,20 +21,25 @@
 
      {% if messages %}
      {% for message in messages %}
-     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          {{message}}
+     <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoCloseAlert">
+          {{ message }}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
      </div>
-
+     <script>
+          // Use vanilla JavaScript to close the alert limited time 
+          setTimeout(function () {
+               document.getElementById('autoCloseAlert').style.display = 'none';
+          }, 1000);
+     </script>
      {% endfor %}
      {% endif %}
-
      {% block content %}
      {% endblock%}
      <!-- Footer-->
      <footer class="py-5 bg-dark">
           <div class="container">
-               <p class="m-0 text-center text-white">Copyright &copy; <a href="https://github.com/Abhi-AD/Ecom">Abhi-AD</a> 2024</p>
+               <p class="m-0 text-center text-white">Copyright &copy; <a
+                         href="https://github.com/Abhi-AD/Ecom">Abhi-AD</a> 2024</p>
           </div>
      </footer>
      <!-- Bootstrap core JS-->
