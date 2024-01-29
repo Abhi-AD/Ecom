@@ -3,10 +3,12 @@
 <style>
      /* Custom CSS for equal-sized images */
      .equal-card-img {
-       height: 150px; /* Adjust the height as needed */
-       object-fit: cover; /* Ensure the image covers the entire container */
+          height: 150px;
+          /* Adjust the height as needed */
+          object-fit: cover;
+          /* Ensure the image covers the entire container */
      }
-   </style>
+</style>
 {% block content %}
 <div class="container">
      <br><br>
@@ -32,13 +34,39 @@
                          ${{product.sale_price}}
                          {% else %}
                          ${{product.price}}
+                         <br>ID:{{product.id}}
                          {% endif %}
                     </div>
                     <a href="{% url 'home'%}" class="btn btn-secondary">Back</a>
+                    <button type="button" value="{{product.id}}" class="btn btn-warning text-light" id="add-cart">Add To
+                         Cart</button>
                </div>
           </div>
      </div>
 </div>
+
+
+<script>
+     // Check if button pressd
+     $(document).on('click', '#add-cart', function (e) {
+          e.preventDefault();
+          $.ajax({
+               type: 'POST',
+               url: "{% url 'cart_add' %}",
+               data: {
+                    product_id: $('#add-cart').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+               },
+               success: function(json){
+                    console.log(json)
+               },
+               error: function(xhr, errmsg, err){
+
+               }
+          });
+     })
+</script>
 
 
 {% endblock %}
