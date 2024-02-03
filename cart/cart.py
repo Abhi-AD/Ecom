@@ -32,7 +32,17 @@ class Cart:
         products = Product.objects.filter(id__in=product_ids)
         # return products
         return products
-    
+
     def get_quants(self):
         quantities = self.cart
         return quantities
+
+    def update(self, product, quantity):
+        product_id = str(product)
+        product_qty = int(quantity)
+        ourcart = self.cart
+        ourcart[product_id] = product_qty
+        self.session.modified = True
+        thing = self.cart
+        return thing
+        
