@@ -63,8 +63,8 @@
                     </div>
                 </div>
                 <a href="{% url 'home'%}" class="btn btn-secondary">Back</a>
-                <button type="button" data-index="{{product.id}}" 
-                class="btn btn-success update-cart">Update</button>
+                <button type="button" data-index="{{product.id}}" class="btn btn-success update-cart">Update</button>
+                <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-cart">Delete</button>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
 
 
 <script>
-    // Check if button pressd
+    //update cart summary 
     $(document).on('click', '.update-cart', function (e) {
         e.preventDefault();
         // grab the product
@@ -96,8 +96,28 @@
                 action: 'post'
             },
             success: function (json) {
-                //console.log(json)
-                //document.getElementById("cart_quantity").textContent = json.qty
+                location.reload()
+            },
+            error: function (xhr, errmsg, err) {
+
+            }
+        });
+    })
+
+
+
+    //delete cart summary
+    $(document).on('click', '.delete-cart', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_delete' %}",
+            data: {
+                product_id: $(this).data('index'),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function (json) {
                 location.reload()
             },
             error: function (xhr, errmsg, err) {
