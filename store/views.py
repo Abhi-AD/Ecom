@@ -80,3 +80,8 @@ def category(request, foo):
     except:
         messages.success(request, "That Category Doesn't Exits..!")
         return redirect("home")
+
+
+def category_summary(request):
+    categories = Category.objects.all()
+    return render(request, "category_summary.html", {"categories":categories})
